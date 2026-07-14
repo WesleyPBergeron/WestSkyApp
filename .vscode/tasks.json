@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+        {
+      "label": "run expo go",
+      "type": "shell",
+      "command": "npx",
+      "args": ["expo", "run"]
+    },
+    {
+      "label": "run expo android",
+      "type": "shell",
+      "command": "npx",
+      "args": ["expo", "run:android"]
+    }
+  ]
+}

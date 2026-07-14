@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
-export default function RootLayout() {
+export default function TabsLayout() {
   return (
     <Tabs initialRouteName="home">
         <Tabs.Screen
