@@ -7,26 +7,48 @@ export default function GlobalStyle() {
     //global styles for light theme
     const lightStyle = StyleSheet.create({
         background: {
-            backgroundColor: '#FFFFFF',
-            
+            backgroundColor: '#FFFFFF', 
         },
         h1: {
-            fontSize: 50,
+            fontSize: 40,
             fontWeight: 'bold',
+            color: '#000000'
 
         },
         h2: {
-            fontSize: 30,
+            fontSize: 20,
             fontWeight: 'bold',
+            color: '#000000'
         },
         subtitle: {
-            color: '#777777',
+            color: '#999999',
             fontSize: 20,
             fontWeight: 'bold',
         },
         subtext: {
-            color: '#777777',
-        }
+            color: '#999999',
+        },
+        text: {
+            color: '#000000'
+        },
+        card: {
+            backgroundColor: '#FFFFFF',
+            borderRadius: 6,
+            borderWidth: 1,
+            borderColor: '#999999',
+            borderStyle: 'solid',
+            boxShadow: '4px 4px 2px 2px rgba(0, 0, 0, 0.15)',
+            padding: 12,
+        },
+        inputField: {
+            borderStyle: 'solid',
+            borderWidth: 1,
+            borderColor: '#999999',
+            borderRadius: 6,
+            backgroundColor: '#c9c9c9',
+            width: '100%',
+            color: '#000000'
+        },
     });
 
     //global styles for dark theme
@@ -35,13 +57,15 @@ export default function GlobalStyle() {
             backgroundColor: '#101225',
         },
         h1: {
-            fontSize: 50,
+            fontSize: 40,
             fontWeight: 'bold',
+            color: '#FFFFFF'
 
         },
         h2: {
-            fontSize: 30,
+            fontSize: 20,
             fontWeight: 'bold',
+            color: '#FFFFFF'
         },
         subtitle: {
             color: '#999999',
@@ -53,10 +77,28 @@ export default function GlobalStyle() {
         },
         text: {
             color: '#FFFFFF'
-        }
+        },
+        card: {
+            backgroundColor: '#101225',
+            borderRadius: 6,
+            borderWidth: 1,
+            borderColor: '#999999',
+            borderStyle: 'solid',
+            boxShadow: '4px 4px 2px 2px rgba(0, 0, 0, 0.15)',
+            padding: 12,
+        },
+        inputField: {
+            borderStyle: 'solid',
+            borderWidth: 1,
+            borderColor: '#999999',
+            borderRadius: 6,
+            backgroundColor: '#1b1e3d',
+            width: '100%',
+            color: '#FFFFFF'
+        },
     });
 
     //defaults to dark if unspecified
-    return (colorScheme === 'light' ? darkStyle : darkStyle);
+    return (colorScheme === 'light' ? lightStyle : darkStyle);
 }
 
