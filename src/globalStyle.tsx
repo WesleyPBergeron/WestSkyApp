@@ -1,13 +1,10 @@
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet } from "react-native";
 
-export default function GlobalStyle() {
-    //gets current color scheme from react native hook
-    const colorScheme = useColorScheme();
-
+export function GlobalStyle(colorScheme: string) {
     //global styles for light theme
     const lightStyle = StyleSheet.create({
         background: {
-            backgroundColor: '#FFFFFF', 
+            backgroundColor: '#ffffff', 
         },
         h1: {
             fontSize: 40,
@@ -45,10 +42,15 @@ export default function GlobalStyle() {
             borderWidth: 1,
             borderColor: '#999999',
             borderRadius: 6,
-            backgroundColor: '#c9c9c9',
+            backgroundColor: '#ebebeb',
             width: '100%',
             color: '#000000'
         },
+        button: {
+            backgroundColor: '#FFFFFF',
+            color: '#000000',
+            
+        }
     });
 
     //global styles for dark theme
@@ -96,6 +98,10 @@ export default function GlobalStyle() {
             width: '100%',
             color: '#FFFFFF'
         },
+        button: {
+            backgroundColor: '#101225',
+            color: '#FFFFFF'
+        }
     });
 
     //defaults to dark if unspecified
