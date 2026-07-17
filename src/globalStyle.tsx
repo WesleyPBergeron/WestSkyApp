@@ -44,9 +44,11 @@ export function GlobalStyle(colorScheme: string) {
             borderRadius: 6,
             backgroundColor: '#ebebeb',
             width: '100%',
-            color: '#000000'
+            color: '#000000',
+            paddingLeft: 6,
+            paddingRight: 6
         },
-        button: {
+        iconButton: {
             backgroundColor: '#FFFFFF',
             color: '#000000',
             
@@ -96,9 +98,11 @@ export function GlobalStyle(colorScheme: string) {
             borderRadius: 6,
             backgroundColor: '#1b1e3d',
             width: '100%',
-            color: '#FFFFFF'
+            color: '#FFFFFF',
+            paddingLeft: 6,
+            paddingRight: 6
         },
-        button: {
+        iconButton: {
             backgroundColor: '#101225',
             color: '#FFFFFF'
         }
