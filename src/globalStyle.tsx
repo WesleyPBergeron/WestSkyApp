@@ -51,8 +51,10 @@ export function GlobalStyle(colorScheme: string) {
         iconButton: {
             backgroundColor: '#FFFFFF',
             color: '#000000',
-            
-        }
+        },
+        errorText: {
+            color: '#bb2626'
+        },
     });
 
     //global styles for dark theme
@@ -105,7 +107,10 @@ export function GlobalStyle(colorScheme: string) {
         iconButton: {
             backgroundColor: '#101225',
             color: '#FFFFFF'
-        }
+        },
+        errorText: {
+            color: '#bb2626'
+        },
     });
 
     //defaults to dark if unspecified

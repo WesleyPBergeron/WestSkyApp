@@ -1,5 +1,6 @@
 import Button from "@/components/button";
 import { GlobalStyle } from "@/globalStyle";
+import { BskyAgent } from '@atproto/api';
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Appearance, Pressable, StyleSheet, Text, TextInput, useColorScheme, View } from "react-native";
@@ -8,15 +9,36 @@ export default function Login() {
   //gets current color scheme from react native hook
   const colorScheme = useColorScheme();
 
-  const [serverName, onChangeServerName] = useState('https://bsky.social');
+  const [serverName, onChangeServerName] = useState('bsky.social');
   const [username, onChangeUsername] = useState('');
   const [password, onChangePassword] = useState('');
+  const [loading, onChangeLoading] = useState(false);
+  const [loginFailiure, onChangeLoginFailiure] = useState(false);
   const gs = GlobalStyle(colorScheme);
 
   const toggleTheme = () => {
     const nextScheme = colorScheme === 'dark' ? 'light' : 'dark';
     Appearance.setColorScheme(nextScheme);
   };
+
+  const logIn = async () => {
+    onChangeLoading(true);
+    onChangeLoginFailiure(false);
+    console.log('pressed')
+    setTimeout(async () => {
+      try {
+        const agent = new BskyAgent({service: 'https://' + serverName});
+        await agent.login({identifier: username + '.' + serverName, password: password})
+        console.log('agent established, proceeding with auth services, ');
+      }
+      catch{
+        console.warn('Failed to establish bluesky agent under the service: "' + serverName + '".');
+        onChangeLoginFailiure(true);
+      }
+      onChangeLoading(false);
+    }, 1500)
+    
+  }
 
   return (
     <View style={[gs.background, styles.container]}>
@@ -44,7 +66,8 @@ export default function Login() {
           <Text style={gs.h2}>Password</Text>
           <TextInput secureTextEntry={true} autoComplete="password" style={gs.inputField} value={password} onChangeText={(text) => onChangePassword(text)} placeholder="Password" placeholderTextColor={"#999999"}/>
         </View>
-        <Button style={styles.loginButton} text="Log In" icon={'log-in-outline'} onPress={() => console.log('pressed')}/>
+        <Button style={styles.loginButton} text="Log In" icon={'log-in-outline'} onPress={logIn} loading={loading}/>
+        {loginFailiure && (<Text style={[gs.errorText, styles.errorText]}>Failed to log in. Server, username, or password is incorrect.</Text>)}
       </View>
     </View>
   );
@@ -68,16 +91,19 @@ const styles = StyleSheet.create({
   },
   card: {
     marginTop: 12,
-    height: '40%',
+    height: '43%',
     width: '80%'
   },
   inputBlock: {
     marginBottom: 12
   },
   loginButton: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
+    marginTop: 12,
     width: '60%',
     alignSelf: 'center'
+  },
+  errorText: {
+    marginTop: 18,
+    textAlign:'center'
   }
 });

@@ -1,28 +1,26 @@
-import { GlobalStyle } from "@/globalStyle";
 import { Ionicons } from "@expo/vector-icons";
-import { GestureResponderEvent, Pressable, StyleProp, StyleSheet, Text, useColorScheme, View, ViewStyle } from "react-native";
+import { ActivityIndicator, GestureResponderEvent, Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
 
 interface ButtonProps {
     onPress: null | ((event: GestureResponderEvent) => void) | undefined;
     text?: string;
     style?: StyleProp<ViewStyle>;
     icon?: string;
+    loading?: boolean;
 }
 
-export default function Button({text, onPress, style, icon}: ButtonProps) {
-  //gets current color scheme from react native hook
-  const colorScheme = useColorScheme();
-  const gs = GlobalStyle(colorScheme);
+export default function Button({text, onPress, style, icon, loading}: ButtonProps) {
 
   return (
     <View style={[style, styles.container]}>
-        <Pressable style={[styles.button]} onPress={onPress}>
-            {icon && (<Ionicons style={styles.icon} name={icon} color='#ffffff' size={20}/>)}
-            {text && (
+        <Pressable style={[styles.button]} onPress={onPress} disabled={loading}>
+            {icon && !loading && (<Ionicons style={styles.icon} name={icon} color='#ffffff' size={20}/>)}
+            {text && !loading && (
                 <Text style={styles.text}>
                     {text}
                 </Text>
             )}
+            {loading && (<ActivityIndicator color='#ffffff'/>)}
         </Pressable>
     </View>
   );
