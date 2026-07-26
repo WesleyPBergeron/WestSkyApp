@@ -24,7 +24,6 @@ export default function Login() {
   const logIn = async () => {
     onChangeLoading(true);
     onChangeLoginFailiure(false);
-    console.log('pressed')
     setTimeout(async () => {
       try {
         const agent = new BskyAgent({service: 'https://' + serverName});
