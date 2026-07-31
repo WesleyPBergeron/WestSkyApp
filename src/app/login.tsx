@@ -1,37 +1,33 @@
 import Button from "@/components/button";
-import { GlobalStyle } from "@/globalStyle";
-import { BskyAgent } from '@atproto/api';
+import { useAuth } from "@/contexts/authContext";
+import { useTheme } from "@/contexts/themeContext";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { Appearance, Pressable, StyleSheet, Text, TextInput, useColorScheme, View } from "react-native";
+import { Appearance, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Login() {
-  //gets current color scheme from react native hook
-  const colorScheme = useColorScheme();
+  //establish contexts for auth and color scheme
+  const auth = useAuth();
+  const globalTheme = useTheme();
 
   const [serverName, onChangeServerName] = useState('bsky.social');
   const [username, onChangeUsername] = useState('');
   const [password, onChangePassword] = useState('');
   const [loading, onChangeLoading] = useState(false);
   const [loginFailiure, onChangeLoginFailiure] = useState(false);
-  const gs = GlobalStyle(colorScheme);
 
   const toggleTheme = () => {
-    const nextScheme = colorScheme === 'dark' ? 'light' : 'dark';
+    const nextScheme = globalTheme.themeMode === 'dark' ? 'light' : 'dark';
     Appearance.setColorScheme(nextScheme);
   };
 
   const logIn = async () => {
+    console.log(auth.agent.session);
     onChangeLoading(true);
     onChangeLoginFailiure(false);
     setTimeout(async () => {
-      try {
-        const agent = new BskyAgent({service: 'https://' + serverName});
-        await agent.login({identifier: username + '.' + serverName, password: password})
-        console.log('agent established, proceeding with auth services, ');
-      }
-      catch{
-        console.warn('Failed to establish bluesky agent under the service: "' + serverName + '".');
+      const response = await auth.logIn(serverName, username, password);
+      if(!response){
         onChangeLoginFailiure(true);
       }
       onChangeLoading(false);
@@ -40,33 +36,33 @@ export default function Login() {
   }
 
   return (
-    <View style={[gs.background, styles.container]}>
+    <View style={[globalTheme.style.background, styles.container]}>
       <Pressable 
         onPress={toggleTheme} 
         style={({ pressed }) => [
-          gs.iconButton, 
+          globalTheme.style.iconButton, 
           styles.styleButton,
           { opacity: pressed ? 0.7 : 1.0 } // Visual feedback
         ]}
       >
-        <Ionicons name="contrast" color={gs.iconButton.color} size={25}/>
+        <Ionicons name="contrast" color={globalTheme.style.iconButton.color} size={25}/>
       </Pressable>
-      <Text style={[gs.h1, styles.header]}>Sign In</Text>
-      <View style={[gs.card, styles.card]}>
+      <Text style={[globalTheme.style.h1, styles.header]}>Sign In</Text>
+      <View style={[globalTheme.style.card, styles.card]}>
         <View style={styles.inputBlock}>
-          <Text style={gs.h2}>Server</Text>
-          <TextInput  style={gs.inputField} value={serverName} onChangeText={(text) => onChangeServerName(text)}/>
+          <Text style={globalTheme.style.h2}>Server</Text>
+          <TextInput  style={globalTheme.style.inputField} value={serverName} onChangeText={(text) => onChangeServerName(text)}/>
         </View>
         <View style={styles.inputBlock}>
-          <Text style={gs.h2}>Username</Text>
-          <TextInput autoComplete="username" style={gs.inputField} value={username} onChangeText={(text) => onChangeUsername(text)} placeholder="Username/Email" placeholderTextColor={"#999999"}/>
+          <Text style={globalTheme.style.h2}>Username</Text>
+          <TextInput autoComplete="username" style={globalTheme.style.inputField} value={username} onChangeText={(text) => onChangeUsername(text)} placeholder="Username/Email" placeholderTextColor={"#999999"}/>
         </View>
         <View style={styles.inputBlock}>
-          <Text style={gs.h2}>Password</Text>
-          <TextInput secureTextEntry={true} autoComplete="password" style={gs.inputField} value={password} onChangeText={(text) => onChangePassword(text)} placeholder="Password" placeholderTextColor={"#999999"}/>
+          <Text style={globalTheme.style.h2}>Password</Text>
+          <TextInput secureTextEntry={true} autoComplete="password" style={globalTheme.style.inputField} value={password} onChangeText={(text) => onChangePassword(text)} placeholder="Password" placeholderTextColor={"#999999"}/>
         </View>
         <Button style={styles.loginButton} text="Log In" icon={'log-in-outline'} onPress={logIn} loading={loading}/>
-        {loginFailiure && (<Text style={[gs.errorText, styles.errorText]}>Failed to log in. Server, username, or password is incorrect.</Text>)}
+        {loginFailiure && (<Text style={[globalTheme.style.errorText, styles.errorText]}>Failed to log in. Server, username, or password is incorrect.</Text>)}
       </View>
     </View>
   );
