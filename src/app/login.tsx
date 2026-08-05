@@ -22,7 +22,6 @@ export default function Login() {
   };
 
   const logIn = async () => {
-    console.log(auth.agent.session);
     onChangeLoading(true);
     onChangeLoginFailiure(false);
     setTimeout(async () => {

@@ -12,7 +12,8 @@ export default function RootLayout() {
       <ThemeProvider>
         <View style={{ flex: 1 }}>
           <StatusBar barStyle={colorScheme}/>
-          <Stack initialRouteName="login" screenOptions={{ headerShown: false}}>
+          <Stack initialRouteName="index" screenOptions={{ headerShown: false}}>
+            <Stack.Screen name="index"/>
             <Stack.Screen name="login"/>
             <Stack.Screen name="(tabs)"/>
           </Stack>
